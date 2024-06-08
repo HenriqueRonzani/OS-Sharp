@@ -1,4 +1,5 @@
 from os import system
+import ctypes
 
 def cls():
   try:
@@ -6,10 +7,11 @@ def cls():
   except:
     pass
 
-def newRegister(currentData: list, newData: dict) -> dict:
-  currentData.append(newData)
-  #make possible validations here
-  return newRegister
+def warningBox(title: str, message: str):
+  try:
+    ctypes.windll.user32.MessageBoxW(0, message, title, 0x00001000 | 0x00000000 | 0x00000030)
+  except:
+    print(f"{title}\n{message}")
 
 #
 # Usage example:
@@ -29,12 +31,12 @@ def handleNumericInput(isFloat: bool, onlyPositive: bool, canQuit: bool) -> any:
     try:
       number =  float(userInput) if isFloat else int(userInput)
       if number < 0 and onlyPositive:
-        print("Você deve digitar um número positivo")
+        warningBox("Erro", "Você deve digitar um número positivo")
       else:
         break
     except: 
       type_ = "real" if isFloat else "inteiro"
-      print(f"Você deve digitar um número {type_} para prosseguir")
+      warningBox("Erro", f"Você deve digitar um número {type_} para prosseguir")
   
   return number
 
@@ -55,3 +57,10 @@ def handleStringInput(canQuit: bool) -> str:
     return "quit"
   
   return userInput
+
+def gatherData(fields: list) -> dict:
+  data = {}
+  for field in fields:
+    print(f"Digite {field}")
+    data[field] = handleStringInput(False)
+  return data
