@@ -34,10 +34,14 @@ def mainMenu():
     print("Digite X | Sair\n")
 
     userInput = handleNumericInput(False, True, True)
-    if userInput in options:
 
+    if userInput in options:
       toRun = options[userInput]
-      employees = toRun([employees, serviceOrders, serviceQueue])
+      [ employees, serviceOrders, serviceQueue ] = toRun( [ employees, serviceOrders, serviceQueue ] )
+
+    elif userInput == "quit":
+      break
+
     else:
       warningBox("Erro", "Opção inválida, você deve digitar uma das opções do menu")
       

@@ -1,13 +1,17 @@
 from utils import cls
 from utils import warningBox
-from utils import handleStringInput
+from utils import handleNumericInput
+from utils import gatherData
 
-def main():
+def main(data):
+  cls()
+  
+  [ employees, serviceOrders, serviceQueue ] = data
+
   options = {
     "1": creatingOrder,
-    "2": edit,
+    "2": selectOrder,
     "3": show,
-    "X": lambda: None
   }
   while True:
     print("Gerenciar ordens de serviço")
@@ -20,40 +24,70 @@ def main():
     userInput = input()
     if userInput in options:
       toRun = options[userInput]
-      toRun()
+      serviceOrders = toRun(serviceOrders, employees)
+    elif userInput.upper() == "X":
+      break
     else:
       warningBox("Erro", "Opção inválida, você deve digitar uma das opções do menu")
       
     cls()
 
-def creatingOrder():
-  print("Digite o nome do cliente")
-  name = handleStringInput(False)
+  return [ employees, serviceOrders, serviceQueue ]
 
-  print("Digite o telefone do cliente")
-  telefone = handleStringInput(False)
+def creatingOrder(orders: dict, employees: list, ) -> dict:
+  order = gatherData(["nome do cliente",
+                      "telefone do cliente",
+                      "produto", 
+                      "defeito",
+                      "data de cadastro",
+                      "status do serviço"
+                      ])
 
-  print("Digite a descrição do equipamento")
-  descricao = handleStringInput(False)
+  if employees:
+    print("Selecione um funcionário para atender a ordem de serviço")
 
-  print("Digite o defeito reclamado")
-  defeito = handleStringInput(False)
-
-  print("Digite a data de cadastro")
-  data = handleStringInput(False)
-
-  print("Digite o status da ordem de serviço")
-  status = handleStringInput(False)
+    for i, employee in enumerate(employees):
+      print(f"{i + 1}: {employee}")
+    employeeNumber = handleNumericInput(False, True, False)
+    order["employee"] = employees[employeeNumber - 1]
+  else:
+    order["employee"] = "Não atribuído"
   
+  toSave = len(orders) + 1
 
-def create():
-  pass
+  orders["000" + str(toSave)] = order
 
-def edit():
-  pass
+  return orders
+
+def selectOrder(orders, employees: list) -> dict:
+  for i in range(len(orders)):
+    order = orders[f"000{i+1}"]
+    toPrint = [ f"00{i+1}", 
+                order["nome do cliente"], 
+                order["produto"],
+                order["status do serviço"],
+              ]
+    print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]}")
+
+  input()
+  return orders
+  
 
 def delete():
   pass
 
-def show():
-  pass
+def show(orders: dict, employees: list) -> dict:
+  cls()
+
+  for i in range(len(orders)):
+    order = orders[f"000{i+1}"]
+    toPrint = [ f"00{i+1}", 
+                order["nome do cliente"], 
+                order["produto"],
+                order["status do serviço"],
+              ]
+    print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]}")
+
+  input("\nDigite enter para sair")
+
+  return orders

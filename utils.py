@@ -61,6 +61,8 @@ def handleStringInput(canQuit: bool) -> str:
 def gatherData(fields: list) -> dict:
   data = {}
   for field in fields:
+    cls()
+    
     print(f"Digite {field}")
     data[field] = handleStringInput(False)
   return data

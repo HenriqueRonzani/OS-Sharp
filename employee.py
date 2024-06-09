@@ -25,15 +25,15 @@ def main(data: list):
     userInput = input()
     if userInput in options:
       toRun = options[userInput]
-      toRun(employees)
+      employees = toRun(employees)
     elif userInput.upper() == "X":
-      return employees
+      break
     else:
       warningBox("Erro", "Opção inválida, você deve digitar uma das opções do menu")
   
     cls()
 
-  return
+  return [ employees, serviceOrders, serviceQueue ]
 
 def creatingEmployee(employees: list) -> list:
   cls()
@@ -57,23 +57,30 @@ def selectEmployee(employees: list)-> list:
     if employeeNumber > len(employees):
       warningBox("Erro", "Funcionário não encontrado")
     else:
-      print(employees[employeeNumber - 1])
-      print("Você deseja editar este funcionário ou deletar?")
-      print("Editar 1 | Excluir 2")
-      
-      userInput = input()
-      if userInput == "1":
-        print("Digite o novo nome do funcionário")
-        newName = handleStringInput(False)
-        employees[employeeNumber - 1] = newName
-        break
-      elif userInput == "2":
-        employees.pop(employeeNumber - 1)
-        break
-      else:
-        warningBox("Erro", "Opção inválida, você deve digitar uma das opções do menu")
+      employees = modifyEmployee(employees, employeeNumber - 1)
+      break
+    
+    cls()
+    
+def modifyEmployee(employees, employeeNumber: list) -> list:
+  while True:
+    print(employees[employeeNumber])
+    print("Você deseja editar este funcionário ou deletar?")
+    print("Editar 1 | Excluir 2")
+    
+    userInput = input()
+    if userInput == "1":
+      print("Digite o novo nome do funcionário")
+      newName = handleStringInput(False)
+      employees[employeeNumber] = newName
+      break
+    elif userInput == "2":
+      employees.pop(employeeNumber)
+      break
+    else:
+      warningBox("Erro", "Opção inválida, você deve digitar uma das opções do menu")
 
-
+  return employees
 
 def listEmployees(employees: list) -> None:
   cls()
@@ -82,3 +89,5 @@ def listEmployees(employees: list) -> None:
     print(f"Nome: {employee}")
 
   input("\nDigite enter para sair")
+
+  return employees
