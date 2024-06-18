@@ -25,6 +25,7 @@ def main(data):
     if userInput in options:
       toRun = options[userInput]
       serviceOrders = toRun(serviceOrders, employees)
+      data = [employees, serviceOrders, serviceQueue]
     elif userInput.upper() == "X":
       break
     else:
@@ -125,6 +126,7 @@ def modifyOrder(orders: dict, orderNumber: int, employees: dict) -> dict:
 
     orders[f"000{orderNumber + 1}"] = order
   elif userInput == "2":
+    order["employee"] = "Não atribuído"
     del orders[f"000{orderNumber + 1}"]
 
   return orders
