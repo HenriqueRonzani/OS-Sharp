@@ -19,7 +19,7 @@ def main(data):
     print("Digite 1 | Cadastrar nova ordem de serviço")
     print("Digite 2 | Editar/Excluir ordem de serviço")
     print("Digite 3 | Listar ordem de serviço")
-    print("Digite X | Voltar ao menu principal")
+    print("Digite X | Voltar ao menu principal\n")
   
     userInput = input()
     if userInput in options:
@@ -32,7 +32,7 @@ def main(data):
       
     cls()
 
-  return [ employees, serviceOrders, serviceQueue ]
+  cls()
 
 def creatingOrder(orders: dict, employees: list, ) -> dict:
   order = gatherData(["nome do cliente",
@@ -61,14 +61,16 @@ def creatingOrder(orders: dict, employees: list, ) -> dict:
   return orders
 
 def selectOrder(orders, employees: list) -> dict:
-  for i in range(len(orders)):
-    order = orders[f"000{i+1}"]
-    toPrint = [ f"00{i+1}", 
+  cls()
+  for orderNumber in orders:
+    order = orders[f"{orderNumber}"]
+    toPrint = [ f"{orderNumber}", 
                 order["nome do cliente"], 
                 order["produto"],
                 order["status do serviço"],
-                employees[order["employee"]],
               ]
+    toPrint.append(employees[order["employee"]] if order["employee"] != "Não atribuído" else "Não atribuído"),
+
     print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]} Funcionário: {toPrint[4]}")
 
   input()
@@ -81,14 +83,15 @@ def delete():
 def show(orders: dict, employees: list) -> dict:
   cls()
 
-  for i in range(len(orders)):
-    order = orders[f"000{i+1}"]
-    toPrint = [ f"00{i+1}", 
+  for orderNumber in orders:
+    order = orders[f"{orderNumber}"]
+    toPrint = [ f"{orderNumber}", 
                 order["nome do cliente"], 
                 order["produto"],
                 order["status do serviço"],
-                employees[order["employee"]],
               ]
+    toPrint.append(employees[order["employee"]] if order["employee"] != "Não atribuído" else "Não atribuído"),
+
     print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]} Funcionário: {toPrint[4]}")
 
   input("\nDigite enter para sair")

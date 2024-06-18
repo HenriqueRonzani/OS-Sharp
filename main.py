@@ -19,7 +19,7 @@ def mainMenu():
       4: generatePDF
     }
   
-  employees = []
+  employees = {}
   serviceOrders = {}
   serviceQueue = {}
   

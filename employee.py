@@ -2,6 +2,7 @@ from utils import warningBox
 from utils import cls
 from utils import handleStringInput
 from utils import handleNumericInput
+from utils import gatherData
 
 
 def main(data: list):
@@ -35,39 +36,41 @@ def main(data: list):
 
   return [ employees, serviceOrders, serviceQueue ]
 
-def creatingEmployee(employees: list) -> list:
+def creatingEmployee(employees: dict) -> list:
   cls()
 
-  print("Digite o nome do funcionário")
-  name = handleStringInput(False)
+  employee = gatherData(["Nome"])
 
-  employees.append(name)
+  toSave = next(reversed(employees), 0) + 1
+
+  employees[toSave] = employee
 
   return employees
 
 def selectEmployee(employees: list)-> list:
   cls()
   while True:
-    for i, employee in enumerate(employees):
-      print(f"{i + 1}: {employee}")
+    for employeeNumber in employees:
+      employee = employees[employeeNumber]
+      print(employeeNumber, f": {employee["Nome"]}")
 
     print("Digite o número de qual funcionário você deseja editar")
     employeeNumber = handleNumericInput(False, True, False)
 
-    if employeeNumber > len(employees):
+    if employeeNumber not in employees:
       warningBox("Erro", "Funcionário não encontrado")
     else:
-      employees = modifyEmployee(employees, employeeNumber - 1)
+      employees = modifyEmployee(employees, employeeNumber)
       break
     
     cls()
 
   return employees
     
-def modifyEmployee(employees, employeeNumber: list) -> list:
+def modifyEmployee(employees: dict, employeeNumber: str) -> dict:
   cls()
   while True:
-    print(employees[employeeNumber])
+    print(employees[employeeNumber]["Nome"])
     print("Você deseja editar este funcionário ou deletar?")
     print("Editar 1 | Excluir 2")
     
@@ -76,11 +79,11 @@ def modifyEmployee(employees, employeeNumber: list) -> list:
       cls()
       print("Digite o novo nome do funcionário")
       newName = handleStringInput(False)
-      employees[employeeNumber] = newName
+      employees[employeeNumber]["Nome"] = newName
       break
     elif userInput == "2":
       cls()
-      employees.pop(employeeNumber)
+      employees.pop(employeeNumber, None)
       break
     else:
       warningBox("Erro", "Opção inválida, você deve digitar uma das opções do menu")
@@ -90,9 +93,10 @@ def modifyEmployee(employees, employeeNumber: list) -> list:
 def listEmployees(employees: list) -> None:
   cls()
 
-  for employee in employees:
-    print(f"Nome: {employee}")
+  for employeeNumber in employees:
+      employee = employees[employeeNumber]
+      print(employeeNumber, f": {employee["Nome"]}")
 
   input("\nDigite enter para sair")
-
+  
   return employees
