@@ -65,6 +65,7 @@ def selectEmployee(employees: list)-> list:
   return employees
     
 def modifyEmployee(employees, employeeNumber: list) -> list:
+  cls()
   while True:
     print(employees[employeeNumber])
     print("Você deseja editar este funcionário ou deletar?")
@@ -72,11 +73,13 @@ def modifyEmployee(employees, employeeNumber: list) -> list:
     
     userInput = input()
     if userInput == "1":
+      cls()
       print("Digite o novo nome do funcionário")
       newName = handleStringInput(False)
       employees[employeeNumber] = newName
       break
     elif userInput == "2":
+      cls()
       employees.pop(employeeNumber)
       break
     else:

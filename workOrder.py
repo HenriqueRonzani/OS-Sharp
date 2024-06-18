@@ -49,7 +49,8 @@ def creatingOrder(orders: dict, employees: list, ) -> dict:
     for i, employee in enumerate(employees):
       print(f"{i + 1}: {employee}")
     employeeNumber = handleNumericInput(False, True, False)
-    order["employee"] = employees[employeeNumber - 1]
+    order["employee"] = int(employeeNumber - 1)
+
   else:
     order["employee"] = "Não atribuído"
   
@@ -66,8 +67,9 @@ def selectOrder(orders, employees: list) -> dict:
                 order["nome do cliente"], 
                 order["produto"],
                 order["status do serviço"],
+                employees[order["employee"]],
               ]
-    print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]}")
+    print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]} Funcionário: {toPrint[4]}")
 
   input()
   return orders
@@ -85,8 +87,9 @@ def show(orders: dict, employees: list) -> dict:
                 order["nome do cliente"], 
                 order["produto"],
                 order["status do serviço"],
+                employees[order["employee"]],
               ]
-    print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]}")
+    print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]} Funcionário: {toPrint[4]}")
 
   input("\nDigite enter para sair")
 

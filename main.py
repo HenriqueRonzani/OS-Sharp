@@ -8,8 +8,8 @@ from serviceQueue import main as manageServiceQueue
 from generatePDF import main as generatePDF
 
 def main(): 
-   cls()
-   mainMenu()
+  cls()
+  mainMenu()
 
 def mainMenu():
   options = {
@@ -30,7 +30,7 @@ def mainMenu():
     print("Digite 1 | Gerenciar ordens de serviço")
     print("Digite 2 | Gerenciar gerenciar funcionários e atribuições")
     print("Digite 3 | Filas de atendimento por funcionário")
-    print("Digite 4 | Gerar PDF de oordens de serviços")
+    print("Digite 4 | Gerar PDF de ordens de serviços")
     print("Digite X | Sair\n")
 
     userInput = handleNumericInput(False, True, True)
