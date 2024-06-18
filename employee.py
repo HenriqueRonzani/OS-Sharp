@@ -61,8 +61,11 @@ def selectEmployee(employees: list)-> list:
       break
     
     cls()
+
+  return employees
     
 def modifyEmployee(employees, employeeNumber: list) -> list:
+  print(employees, employeeNumber, employees[employeeNumber])
   while True:
     print(employees[employeeNumber])
     print("Você deseja editar este funcionário ou deletar?")
