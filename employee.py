@@ -47,7 +47,7 @@ def creatingEmployee(employees: dict) -> list:
 
   return employees
 
-def selectEmployee(employees: list)-> list:
+def selectEmployee(employees: dict) -> dict:
   cls()
   while True:
     for employeeNumber in employees:

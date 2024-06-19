@@ -37,7 +37,9 @@ def mainMenu():
 
     if userInput in options:
       toRun = options[userInput]
-      [ employees, serviceOrders, serviceQueue ] = toRun( [ employees, serviceOrders, serviceQueue ] )
+      result = toRun([employees, serviceOrders, serviceQueue])
+      if result is not None:
+        employees, serviceOrders, serviceQueue = result
 
     elif userInput == "quit":
       break

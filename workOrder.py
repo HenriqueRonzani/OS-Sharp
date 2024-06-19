@@ -11,7 +11,7 @@ def main(data):
   options = {
     "1": creatingOrder,
     "2": selectOrder,
-    "3": show,
+    "3": listOrders,
   }
   while True:
     print("Gerenciar ordens de serviço")
@@ -25,6 +25,7 @@ def main(data):
     if userInput in options:
       toRun = options[userInput]
       serviceOrders = toRun(serviceOrders, employees)
+      data = [employees, serviceOrders, serviceQueue]
     elif userInput.upper() == "X":
       break
     else:
@@ -34,7 +35,7 @@ def main(data):
 
   cls()
 
-def creatingOrder(orders: dict, employees: list, ) -> dict:
+def creatingOrder(orders: dict, employees: dict) -> dict:
   order = gatherData(["nome do cliente",
                       "telefone do cliente",
                       "produto", 
@@ -46,10 +47,12 @@ def creatingOrder(orders: dict, employees: list, ) -> dict:
   if employees:
     print("Selecione um funcionário para atender a ordem de serviço")
 
-    for i, employee in enumerate(employees):
-      print(f"{i + 1}: {employee}")
+    for employeeNumber in employees:
+      employee = employees[employeeNumber]
+      print(f"{employeeNumber}: {employee['Nome']}")
+
     employeeNumber = handleNumericInput(False, True, False)
-    order["employee"] = int(employeeNumber - 1)
+    order["employee"] = employeeNumber
 
   else:
     order["employee"] = "Não atribuído"
@@ -60,27 +63,78 @@ def creatingOrder(orders: dict, employees: list, ) -> dict:
 
   return orders
 
-def selectOrder(orders, employees: list) -> dict:
+def selectOrder(orders: dict, employees: dict) -> dict:
   cls()
-  for orderNumber in orders:
-    order = orders[f"{orderNumber}"]
-    toPrint = [ f"{orderNumber}", 
-                order["nome do cliente"], 
-                order["produto"],
-                order["status do serviço"],
-              ]
-    toPrint.append(employees[order["employee"]] if order["employee"] != "Não atribuído" else "Não atribuído"),
+  while True:
+    for i in range(len(orders)):
+      order = orders[f"000{i+1}"]
+      if "employee" in order and order["employee"] in employees:
+        employeeName = employees[order["employee"]]['Nome']
+      else:
+        employeeName = "Não atribuído"
+      toPrint = [ f"00{i+1}", 
+                  order["nome do cliente"], 
+                  order["produto"],
+                  order["status do serviço"],
+                  employeeName
+                ]
+      print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]}, Funcionário: {toPrint[4]}")
 
-    print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]} Funcionário: {toPrint[4]}")
+    print("Digite o número de qual ordem você deseja editar")
+    orderNumber = handleNumericInput(False, True, False)
 
-  input()
+    if orderNumber > len(orders):
+      warningBox("Erro", "Ordem não encontrada")
+    else:
+      orders = modifyOrder(orders, orderNumber - 1, employees)
+      break
+
+    cls()
+
   return orders
-  
+
+def modifyOrder(orders: dict, orderNumber: int, employees: dict) -> dict:
+  order = orders[f"000{orderNumber + 1}"]
+
+  print("O que você deseja fazer?")
+  print("Digite 1 | Editar ordem")
+  print("Digite 2 | Excluir ordem")
+  print("Digite X | Voltar")
+
+  userInput = input()
+
+  if userInput == "1":
+    order = gatherData(["nome do cliente",
+                        "telefone do cliente",
+                        "produto", 
+                        "defeito",
+                        "data de cadastro",
+                        "status do serviço"
+                        ])
+    if employees:
+      print("Selecione um funcionário para atender a ordem de serviço")
+
+      for employeeNumber in employees:
+        employee = employees[employeeNumber]
+        print(f"{employeeNumber}: {employee['Nome']}")
+
+      employeeNumber = handleNumericInput(False, True, False)
+      order["employee"] = employeeNumber
+
+    else:
+      order["employee"] = "Não atribuído"
+
+    orders[f"000{orderNumber + 1}"] = order
+  elif userInput == "2":
+    order["employee"] = "Não atribuído"
+    del orders[f"000{orderNumber + 1}"]
+
+  return orders
 
 def delete():
   pass
 
-def show(orders: dict, employees: list) -> dict:
+def listOrders(orders: dict, employees: dict) -> dict:
   cls()
 
   for orderNumber in orders:
@@ -90,7 +144,11 @@ def show(orders: dict, employees: list) -> dict:
                 order["produto"],
                 order["status do serviço"],
               ]
-    toPrint.append(employees[order["employee"]] if order["employee"] != "Não atribuído" else "Não atribuído"),
+    if "employee" in order and order["employee"] in employees:
+        employeeName = employees[order["employee"]]['Nome']
+    else:
+        employeeName = "Não atribuído"
+    toPrint.append(employeeName)
 
     print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]} Funcionário: {toPrint[4]}")
 
