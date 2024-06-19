@@ -82,7 +82,7 @@ def selectOrder(orders: dict, employees: dict) -> dict:
                 ]
       toPrint.append(employees[order["employee"]]["Nome"] if order["employee"] != "Não atribuído" else "Não atribuído"),
 
-      print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]} Funcionário: {toPrint[4]}")
+      print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Produto: {toPrint[2]}, Status: {toPrint[3]}, Funcionário: {toPrint[4]}")
 
 
     print("Digite o número de qual ordem você deseja editar")
@@ -196,7 +196,7 @@ def listOrders(orders: dict, employees: dict) -> dict:
         employeeName = "Não atribuído"
     toPrint.append(employeeName)
 
-    print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Telefone do cliente: {toPrint[2]}, Produto: {toPrint[3]}, Defeito:, {toPrint[4]}, Data: {toPrint[5]} Status: {toPrint[6]} Funcionário: {toPrint[7]}")
+    print(f"Ordem {toPrint[0]}: Nome do cliente: {toPrint[1]}, Telefone: {toPrint[2]}, Produto: {toPrint[3]}, Defeito: {toPrint[4]}, Data: {toPrint[5]}, Status: {toPrint[6]}, Funcionário: {toPrint[7]}")
 
   input("\nDigite enter para sair")
 

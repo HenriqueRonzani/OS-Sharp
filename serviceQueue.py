@@ -75,7 +75,8 @@ def showByOrder(employees, serviceOrders):
   cls()
   for orderNumber in serviceOrders:
     order = serviceOrders[orderNumber]
-    print(f"Ordem de serviço {orderNumber}: Funcionário responsável: {employees[order['employee']]['Nome']}")
+    employee = employees[order["employee"]]["Nome"] if order["employee"] != "Não atribuído" else "Não atribuído"
+    print(f"Ordem de serviço {orderNumber}: Funcionário responsável: {employee}")
     print()
   
   input("Pressione Enter para continuar")

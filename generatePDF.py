@@ -29,10 +29,14 @@ def main(data):
       dataToPrint.append(userInput)
 
       generatePdf(dataToPrint)
-      break
+      warningBox("Sucesso", "PDF gerado com sucesso na pasta pdfs")
 
     elif userInput.upper() == "X":
       break
+    else:
+      warningBox("Erro", "Ordem de serviço não encontrada")
+    
+    cls()
 
   return [employees, orders]
 
@@ -68,6 +72,7 @@ def generatePdf(dataToPrint):
   c.setFont("Helvetica", 20)
 
   c.drawString(175, 80, f"Ordem de Serviço: {dataToPrint[7]}")
+  c.drawString(175, 80+otherSide, f"Ordem de Serviço: {dataToPrint[7]}")
 
   c.line(0, 420.945, 595.276, 420.945)
   c.save()
