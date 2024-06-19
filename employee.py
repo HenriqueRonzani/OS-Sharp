@@ -13,7 +13,7 @@ def main(data: list):
     "3": listEmployees,
   }
 
-  [ employees, serviceOrders, serviceQueue ] = data
+  [ employees, serviceOrders ] = data
 
   while True:
     print("Gerenciar funcionários")
@@ -34,7 +34,7 @@ def main(data: list):
   
     cls()
 
-  return [ employees, serviceOrders, serviceQueue ]
+  return [ employees, serviceOrders ]
 
 def creatingEmployee(employees: dict) -> list:
   cls()
@@ -49,6 +49,9 @@ def creatingEmployee(employees: dict) -> list:
 
 def selectEmployee(employees: dict) -> dict:
   cls()
+  if not employees:
+    warningBox("Erro", "Não há funcionários cadastrados")
+    return employees
   while True:
     for employeeNumber in employees:
       employee = employees[employeeNumber]
@@ -72,7 +75,7 @@ def modifyEmployee(employees: dict, employeeNumber: str) -> dict:
   while True:
     print(employees[employeeNumber]["Nome"])
     print("Você deseja editar este funcionário ou deletar?")
-    print("Editar 1 | Excluir 2")
+    print("Editar 1 | Excluir 2\n")
     
     userInput = input()
     if userInput == "1":

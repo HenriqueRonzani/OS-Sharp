@@ -2,7 +2,7 @@ from utils import cls
 from utils import handleNumericInput
 from utils import warningBox
 
-from workOrder import main as manageOrders
+from serviceOrder import main as manageOrders
 from employee import main as manageEmployees
 from serviceQueue import main as manageServiceQueue
 from generatePDF import main as generatePDF
@@ -21,7 +21,6 @@ def mainMenu():
   
   employees = {}
   serviceOrders = {}
-  serviceQueue = {}
   
   while True:  
 
@@ -37,9 +36,9 @@ def mainMenu():
 
     if userInput in options:
       toRun = options[userInput]
-      result = toRun([employees, serviceOrders, serviceQueue])
+      result = toRun([employees, serviceOrders])
       if result is not None:
-        employees, serviceOrders, serviceQueue = result
+        employees, serviceOrders = result
 
     elif userInput == "quit":
       break
