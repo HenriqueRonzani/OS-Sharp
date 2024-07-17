@@ -21,4 +21,5 @@ Apesar do projeto ter atendido aos objetivos específicos, a falta de possibilid
 ## Necessário
 Devido ao uso da biblioteca reportlab, é necessário instalá-lo.
 > pip install reportlab
+
 Após isso o app pode rodar no terminal.
